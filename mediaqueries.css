@@ -59,6 +59,22 @@
     grid-template-columns: 1fr;
   }
   
+  .skills-categories {
+    grid-template-columns: 1fr;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline-item {
+    padding: 1.5rem;
+  }
+  
+  .skills-section {
+    padding: 2rem 1rem;
+  }
+  
   .article-container {
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1rem;
@@ -124,6 +140,27 @@
     gap: 1rem;
   }
   
+  .timeline-item {
+    padding: 1rem;
+  }
+  
+  .company-info h3 {
+    font-size: 1.2rem;
+  }
+  
+  .skills-title {
+    font-size: 1.5rem;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .project-content {
+    padding: 1.5rem;
+  }
+  
   .article-container {
     grid-template-columns: 1fr;
   }
@@ -185,5 +222,23 @@
   
   .experience-sub-title {
     font-size: 1.25rem;
+  }
+  
+  .skills-categories {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .project-image-container {
+    height: 150px;
+  }
+  
+  .project-placeholder h3 {
+    font-size: 2rem;
   }
 }
