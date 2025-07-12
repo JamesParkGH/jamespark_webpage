@@ -297,8 +297,11 @@ section.fade-in {
   justify-content: center;
   align-items: center;
   gap: 4rem;
-  min-height: 100vh;
-  padding-top: 8rem;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  padding-top: 80px;
+  box-sizing: border-box;
 }
 
 .section__pic-container {
