@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav id="desktop-nav">
-        <div class="logo">James Park</div>
+        <div class="logo" onclick="location.href='#profile'">James Park</div>
         <div class="nav-right">
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
@@ -30,7 +30,7 @@
         </div>
     </nav>
     <nav id="hamburger-nav">
-        <div class="logo">James Park</div>
+        <div class="logo" onclick="location.href='#profile'">James Park</div>
         <div class="hamburger-right">
             <div class="theme-toggle mobile" onclick="toggleTheme()">
                 <div class="toggle-container">
@@ -68,7 +68,7 @@
                 <span class="btn-text">Download Resume</span>
             </button>
                 <button class="btn btn-secondary" 
-                onclick="location.href='./#contact'">
+                onclick="window.open('mailto:jamesparkgh@gmail.com')">
                 <span class="btn-text">Contact Me</span>
             </button>
             </div>

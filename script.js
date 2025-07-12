@@ -16,6 +16,28 @@ function toggleTheme() {
     
     // Add a subtle animation to the page
     document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+    
+    // Immediately update navbar background based on new theme
+    updateNavbarBackground(newTheme);
+}
+
+function updateNavbarBackground(theme) {
+    const nav = document.querySelector('nav');
+    const isScrolled = window.scrollY > 50;
+    
+    if (theme === 'dark') {
+        if (isScrolled) {
+            nav.style.background = 'rgba(15, 23, 42, 0.98)';
+        } else {
+            nav.style.background = 'rgba(15, 23, 42, 0.95)';
+        }
+    } else {
+        if (isScrolled) {
+            nav.style.background = 'rgba(255, 255, 255, 0.98)';
+        } else {
+            nav.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
+    }
 }
 
 // Initialize theme from localStorage or system preference
@@ -32,11 +54,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize theme
     initializeTheme();
     
+    // Initialize navbar background
+    const initialTheme = document.documentElement.getAttribute('data-theme');
+    updateNavbarBackground(initialTheme);
+    
     // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (!localStorage.getItem('theme')) {
             const newTheme = e.matches ? 'dark' : 'light';
             document.documentElement.setAttribute('data-theme', newTheme);
+            updateNavbarBackground(newTheme);
         }
     });
 
@@ -83,18 +110,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add navbar background on scroll
     const nav = document.querySelector('nav');
-    const currentTheme = document.documentElement.getAttribute('data-theme');
     
     window.addEventListener('scroll', function() {
         const theme = document.documentElement.getAttribute('data-theme');
-        const lightBg = 'rgba(255, 255, 255, 0.98)';
-        const darkBg = 'rgba(15, 23, 42, 0.98)';
+        updateNavbarBackground(theme);
         
         if (window.scrollY > 50) {
-            nav.style.background = theme === 'dark' ? darkBg : lightBg;
             nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
         } else {
-            nav.style.background = theme === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)';
             nav.style.boxShadow = 'none';
         }
     });
