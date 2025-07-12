@@ -535,12 +535,14 @@ section.fade-in {
 
 .about-image {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 }
 
 .about-pic {
-  width: 300px;
-  height: 300px;
+  width: 280px;
+  height: 280px;
   object-fit: cover;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
@@ -549,6 +551,10 @@ section.fade-in {
 
 .about-pic:hover {
   transform: scale(1.02);
+}
+
+.about-pic-secondary {
+  opacity: 0.95;
 }
 
 .about-info {
