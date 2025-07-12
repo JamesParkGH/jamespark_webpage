@@ -472,6 +472,62 @@
           </div>
         </div>
       </section>
+      <!-- AI Chatbot -->
+      <div id="chatbot-container" class="chatbot-container">
+        <div id="chatbot-toggle" class="chatbot-toggle">
+          <div class="chatbot-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22H4C3.448 22 3 21.552 3 21V12C3 6.477 7.477 2 12 2Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M8 10H8.01M12 10H12.01M16 10H16.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="chatbot-text">Ask me anything!</span>
+        </div>
+        
+        <div id="chatbot-window" class="chatbot-window">
+          <div class="chatbot-header">
+            <div class="chatbot-header-content">
+              <div class="chatbot-avatar">JP</div>
+              <div class="chatbot-info">
+                <h4>James Park AI Assistant</h4>
+                <p>Ask me about my experience, skills, or projects!</p>
+              </div>
+            </div>
+            <button id="chatbot-close" class="chatbot-close">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          
+          <div id="chatbot-messages" class="chatbot-messages">
+            <div class="message bot-message">
+              <div class="message-avatar">JP</div>
+              <div class="message-content">
+                <p>Hello! I'm James's AI assistant. I can answer questions about his experience, skills, projects, and background. What would you like to know?</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="chatbot-input-container">
+            <div class="chatbot-suggestions">
+              <button class="suggestion-btn" data-question="What is James's experience?">Experience</button>
+              <button class="suggestion-btn" data-question="What programming languages does James know?">Skills</button>
+              <button class="suggestion-btn" data-question="Tell me about James's projects">Projects</button>
+              <button class="suggestion-btn" data-question="What is James's educational background?">Education</button>
+            </div>
+            <div class="chatbot-input-area">
+              <input type="text" id="chatbot-input" placeholder="Ask me anything about James..." maxlength="500">
+              <button id="chatbot-send" class="chatbot-send-btn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M18 2L9 11M18 2L12 18L9 11M18 2L2 8L9 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <footer>
         <p>© 2025 James Park. All rights reserved.</p>
       </footer>
