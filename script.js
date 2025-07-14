@@ -258,55 +258,129 @@ function initializeChatbot() {
         }
     }
 
+    // Helper function to check for fuzzy matching and common misspellings
+    function fuzzyMatch(input, keywords) {
+        const inputLower = input.toLowerCase();
+        return keywords.some(keyword => {
+            // Direct match
+            if (inputLower.includes(keyword)) return true;
+            
+            // Check for common misspellings and variations
+            const variations = getWordVariations(keyword);
+            return variations.some(variation => inputLower.includes(variation));
+        });
+    }
+
+    function getWordVariations(word) {
+        const variations = [word];
+        
+        // Common misspellings and variations
+        const misspellings = {
+            'experience': ['experiance', 'experence', 'expirience', 'exp', 'work', 'job'],
+            'programming': ['programing', 'coding', 'code', 'prog', 'software'],
+            'language': ['langugage', 'lang', 'langs', 'languages'],
+            'project': ['projet', 'projects', 'proj'],
+            'education': ['educaton', 'school', 'university', 'degree', 'study'],
+            'skill': ['skil', 'skills', 'talent', 'ability'],
+            'hobby': ['hobbies', 'hobbie', 'interest', 'interests', 'free time', 'fun'],
+            'korean': ['korea', 'korean language', 'hangul'],
+            'english': ['enlgish', 'english language'],
+            'french': ['france', 'french language'],
+            'tennis': ['tenis', 'tennis ball'],
+            'soccer': ['football', 'futbol', 'soccar'],
+            'hiking': ['hike', 'walking', 'trekking'],
+            'running': ['run', 'jog', 'jogging'],
+            'contact': ['reach', 'email', 'linkedin', 'connect'],
+            'name': ['legal name', 'real name', 'full name', 'ganghoon'],
+            'dog': ['pet', 'puppy', 'dogs']
+        };
+
+        if (misspellings[word]) {
+            variations.push(...misspellings[word]);
+        }
+
+        return variations;
+    }
+
     function generateAIResponse(message) {
         const lowerMessage = message.toLowerCase();
         
+        // Name-related responses
+        if (fuzzyMatch(lowerMessage, ['name', 'legal name', 'real name', 'full name', 'ganghoon'])) {
+            return "James goes by James Park professionally, but his legal name is Ganghoon Park. He uses 'James' as his preferred English name for easier pronunciation and professional networking. You can call him either James or Ganghoon!";
+        }
+        
+        // Language-related responses
+        if (fuzzyMatch(lowerMessage, ['language', 'korean', 'english', 'french', 'speak', 'bilingual', 'multilingual'])) {
+            return "James is multilingual! He's fluent in both Korean and English, which helps him work with diverse international teams. He also knows a little bit of French, which he's been learning in his spare time. His language skills have been valuable in his international work experience and connecting with global clients.";
+        }
+        
+        // Hobbies and interests responses
+        if (fuzzyMatch(lowerMessage, ['hobby', 'hobbies', 'interest', 'fun', 'free time', 'tennis', 'soccer', 'hiking', 'running', 'dog', 'sport', 'exercise', 'fitness'])) {
+            return "James has an active lifestyle and enjoys various sports and outdoor activities! He loves playing tennis and soccer, which keep him competitive and fit. He's also passionate about hiking and exploring nature trails. One of his favorite activities is running with his dog - it's great exercise for both of them and a wonderful way to bond. These hobbies help him maintain work-life balance and stay energized for his demanding tech career.";
+        }
+        
         // Experience-related responses
-        if (lowerMessage.includes('experience') || lowerMessage.includes('work') || lowerMessage.includes('job')) {
+        if (fuzzyMatch(lowerMessage, ['experience', 'work', 'job', 'career', 'professional'])) {
             return "James has 3+ years of professional experience! He's currently an AI Coding Expert & AI Trainer at Outlier, training Gen AI models across multiple programming languages. Previously, he worked as a Sales Engineer at SOTI Inc. for 2 years, where he led technical demos for 50+ enterprise customers and reduced deployment time by 200%. He also has experience as a Client Support Engineer at Andorix Inc. and has been creating technical content on YouTube since 2020.";
         }
         
         // Skills-related responses
-        if (lowerMessage.includes('skill') || lowerMessage.includes('programming') || lowerMessage.includes('language') || lowerMessage.includes('technology')) {
+        if (fuzzyMatch(lowerMessage, ['skill', 'programming', 'language', 'technology', 'tech', 'code', 'coding'])) {
             return "James is proficient in multiple programming languages including Java, Python, JavaScript/TypeScript, C/C++, C#, SQL, and Go. He has expertise in frameworks like React, Node.js, Express, Spring Boot, and Angular. For databases, he works with MongoDB and PostgreSQL. He's also experienced with cloud platforms (Azure, AWS), DevOps tools (Docker, Git, CI/CD), and enterprise solutions like Salesforce and Jira.";
         }
         
         // Projects-related responses
-        if (lowerMessage.includes('project') || lowerMessage.includes('portfolio') || lowerMessage.includes('build') || lowerMessage.includes('created')) {
+        if (fuzzyMatch(lowerMessage, ['project', 'portfolio', 'build', 'created', 'github', 'code'])) {
             return "James has worked on several impressive projects! His notable ones include a Virtual Dragon Boat Coach using OpenCap and OpenSim APIs for biomechanical analysis, SecureChat - an encrypted communication app with KDC, a Random Flag Generator using Canvas API, an AI ChatBot with NLP capabilities, and comprehensive Interview Questions & Study Notes for technical preparation. Each project showcases different aspects of his technical expertise from AI/ML to security and web development.";
         }
         
         // Education-related responses
-        if (lowerMessage.includes('education') || lowerMessage.includes('degree') || lowerMessage.includes('university') || lowerMessage.includes('study')) {
-            return "James holds a Bachelor of Engineering (B.Eng.) degree from McMaster University. He also has professional certifications including Microsoft Azure for Cloud Solutions, Google Analytics for Data Analysis, and Salesforce for CRM Solutions. His educational background combined with hands-on experience has given him a strong foundation in both theoretical concepts and practical applications.";
+        if (fuzzyMatch(lowerMessage, ['education', 'degree', 'university', 'study', 'school', 'mcmaster', 'engineering'])) {
+            return "James holds a Bachelor of Engineering (B.Eng.) degree from McMaster University in Canada. He also has professional certifications including Microsoft Azure for Cloud Solutions, Google Analytics for Data Analysis, and Salesforce for CRM Solutions. His educational background combined with hands-on experience has given him a strong foundation in both theoretical concepts and practical applications.";
         }
         
         // Contact-related responses
-        if (lowerMessage.includes('contact') || lowerMessage.includes('reach') || lowerMessage.includes('email') || lowerMessage.includes('linkedin')) {
+        if (fuzzyMatch(lowerMessage, ['contact', 'reach', 'email', 'linkedin', 'connect', 'hire', 'work together'])) {
             return "You can reach James through his email at jamesparkgh@gmail.com or connect with him on LinkedIn at linkedin.com/in/jamesparkg/. He's also active on GitHub where you can check out his projects. Feel free to reach out for collaboration opportunities, technical discussions, or any questions about his work!";
         }
         
         // YouTube/Content creation responses
-        if (lowerMessage.includes('youtube') || lowerMessage.includes('content') || lowerMessage.includes('tutorial') || lowerMessage.includes('video')) {
+        if (fuzzyMatch(lowerMessage, ['youtube', 'content', 'tutorial', 'video', 'creator', 'channel'])) {
             return "James is an active YouTube creator specializing in programming tutorials! His content has reached over 600,000+ views and he has built an audience of 10,000+ monthly users. He creates educational content about programming, software development, and technical topics. His expertise extends to video production using Adobe Premiere Pro, Photoshop, and DaVinci Resolve.";
         }
         
         // AI/Machine Learning responses
-        if (lowerMessage.includes('ai') || lowerMessage.includes('artificial intelligence') || lowerMessage.includes('machine learning') || lowerMessage.includes('ml')) {
+        if (fuzzyMatch(lowerMessage, ['ai', 'artificial intelligence', 'machine learning', 'ml', 'outlier', 'rlhf'])) {
             return "James is currently working as an AI Coding Expert & AI Trainer at Outlier, where he trains Gen AI models across multiple programming languages including Java, Python, JavaScript/TypeScript, C++, Swift, and Verilog. He reviews code and debugs AI-generated solutions using RLHF (Reinforcement Learning from Human Feedback) for accuracy and scalability. His AI projects include an intelligent chatbot with NLP capabilities and various machine learning implementations.";
         }
         
+        // Personal life and background
+        if (fuzzyMatch(lowerMessage, ['personal', 'about', 'background', 'tell me about', 'who is', 'bio'])) {
+            return "James (legal name: Ganghoon Park) is a passionate Software Engineer and AI expert from Canada. He's multilingual, speaking Korean, English, and some French. In his free time, he enjoys staying active with tennis, soccer, hiking, and running with his dog. He graduated from McMaster University with a B.Eng. and has built a successful career in tech while maintaining an active YouTube channel with 600K+ views.";
+        }
+        
+        // Sports and fitness
+        if (fuzzyMatch(lowerMessage, ['sport', 'tennis', 'soccer', 'football', 'fitness', 'exercise', 'active'])) {
+            return "James is very athletic and loves staying active! He plays tennis regularly, which helps with his hand-eye coordination and strategic thinking. He also enjoys soccer (football), which keeps him in great shape and teaches teamwork. These sports complement his tech career by providing physical activity and mental breaks from coding.";
+        }
+        
+        // Outdoor activities
+        if (fuzzyMatch(lowerMessage, ['outdoor', 'hiking', 'running', 'dog', 'nature', 'trail'])) {
+            return "James loves outdoor activities! He's an avid hiker who enjoys exploring nature trails and scenic routes. One of his favorite activities is running with his dog - it's a perfect combination of exercise, bonding time, and stress relief. These outdoor activities help him maintain work-life balance and often inspire creative solutions to technical problems.";
+        }
+        
         // General greeting responses
-        if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
-            return "Hello! Great to meet you! I'm here to tell you all about James Park - his experience, skills, projects, and background. What would you like to know about him?";
+        if (fuzzyMatch(lowerMessage, ['hello', 'hi', 'hey', 'greetings', 'good morning', 'good afternoon'])) {
+            return "Hello! Great to meet you! I'm here to tell you all about James Park (Ganghoon Park) - his experience, skills, projects, hobbies, and background. What would you like to know about him?";
         }
         
         // Achievements/accomplishments
-        if (lowerMessage.includes('achievement') || lowerMessage.includes('accomplishment') || lowerMessage.includes('success')) {
-            return "James has achieved quite a lot! He's served 50+ enterprise clients, reached 600K+ YouTube views, reduced deployment time by 200% at SOTI Inc., and has 3+ years of professional experience. He's currently training cutting-edge AI models at Outlier and has built a strong portfolio of technical projects spanning AI, security, and web development.";
+        if (fuzzyMatch(lowerMessage, ['achievement', 'accomplishment', 'success', 'impressive', 'proud'])) {
+            return "James has achieved quite a lot! He's served 50+ enterprise clients, reached 600K+ YouTube views, reduced deployment time by 200% at SOTI Inc., and has 3+ years of professional experience. He's currently training cutting-edge AI models at Outlier and has built a strong portfolio of technical projects. He's also maintained an active lifestyle with multiple sports and speaks three languages!";
         }
         
-        // Default response
-        return "That's a great question! James is a versatile Software Engineer and AI Coding Expert with experience in full-stack development, AI/ML, and enterprise solutions. Could you be more specific about what you'd like to know? You can ask about his experience, skills, projects, education, or how to contact him!";
+        // Default response with improved suggestions
+        return "That's a great question! James (Ganghoon Park) is a versatile Software Engineer and AI Coding Expert with experience in full-stack development, AI/ML, and enterprise solutions. He's also multilingual and very athletic! Could you be more specific about what you'd like to know? You can ask about his:\n\n• Professional experience and skills\n• Projects and technical work\n• Education and certifications\n• Languages (Korean, English, French)\n• Hobbies (tennis, soccer, hiking, running)\n• Contact information\n• Personal background";
     }
 }
