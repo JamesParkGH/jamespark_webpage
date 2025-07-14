@@ -1159,6 +1159,7 @@ article div p {
   border-radius: var(--radius-lg);
   transition: all 0.3s ease;
   flex: 1;
+  cursor: pointer;
 }
 
 .contact-info-container:hover {
@@ -1189,7 +1190,7 @@ article div p {
 }
 
 .contact-icon {
-  cursor: default;
+  cursor: pointer;
   height: 2rem;
   width: 2rem;
   transition: all 0.3s ease;
