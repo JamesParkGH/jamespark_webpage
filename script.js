@@ -302,42 +302,118 @@ function initializeChatbot() {
         return variations;
     }
 
+    // Helper function to check if question is about James/relevant topics
+    function isRelevantToJames(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        // James-related keywords
+        const jamesKeywords = [
+            'james', 'ganghoon', 'park', 'his', 'he', 'him', 'you', 'your',
+            'experience', 'work', 'job', 'career', 'professional', 'skills', 'programming',
+            'project', 'portfolio', 'education', 'degree', 'university', 'mcmaster',
+            'hobby', 'tennis', 'soccer', 'hiking', 'running', 'dog', 'korean', 'english', 'french',
+            'contact', 'email', 'linkedin', 'youtube', 'ai', 'outlier', 'soti', 'andorix',
+            'achievement', 'accomplishment', 'language', 'multilingual', 'sport', 'fitness',
+            'about', 'background', 'bio', 'personal', 'tell me about', 'who is',
+            'hello', 'hi', 'hey', 'greetings', 'thanks', 'thank you'
+        ];
+        
+        // Check if message contains James-related keywords
+        const hasRelevantKeywords = jamesKeywords.some(keyword => 
+            lowerMessage.includes(keyword)
+        );
+        
+        // Common off-topic patterns to explicitly reject
+        const offTopicPatterns = [
+            /^\d+[\+\-\*\/]\d+/, // Math expressions like "2+2"
+            /what is the capital of/,
+            /capital of/,
+            /what is \d+/,
+            /how do you (cook|make|bake)/,
+            /what does .* mean/,
+            /define /,
+            /weather/,
+            /news/,
+            /current events/,
+            /recipe/,
+            /cooking/,
+            /movie/,
+            /song/,
+            /book recommendation/,
+            /what time is it/,
+            /what day is/,
+            /how old is/,
+            /when was .* born/,
+            /what color/,
+            /translate/,
+            /conversion/,
+            /convert/,
+            /currency/,
+            /stock price/,
+            /math/,
+            /calculation/,
+            /solve/,
+            /homework/,
+            /assignment/
+        ];
+        
+        const isOffTopic = offTopicPatterns.some(pattern => 
+            pattern.test(lowerMessage)
+        );
+        
+        return hasRelevantKeywords && !isOffTopic;
+    }
+
     function generateAIResponse(message) {
         const lowerMessage = message.toLowerCase();
         
+        // First check if the question is relevant to James
+        if (!isRelevantToJames(message)) {
+            const offTopicResponses = [
+                "I'm sorry, but I can only answer questions about James Park (Ganghoon Park) - his professional experience, skills, projects, hobbies, and background. For other topics, please feel free to contact James directly at jamesparkgh@gmail.com!",
+                
+                "That's not something I can help with! I'm specifically designed to answer questions about James's career, skills, projects, and personal interests. You can reach out to James at jamesparkgh@gmail.com for other questions, or ask me about:\n\n• His professional experience\n• Technical skills and projects\n• Hobbies and interests\n• Educational background\n• Contact information",
+                
+                "I specialize in answering questions about James Park only! For general questions like that, I'd recommend contacting James directly. You can reach him at jamesparkgh@gmail.com or connect on LinkedIn. Meanwhile, feel free to ask me about his work experience, programming skills, projects, or hobbies!"
+            ];
+            
+            // Return a random off-topic response
+            return offTopicResponses[Math.floor(Math.random() * offTopicResponses.length)];
+        }
+        
         // Name-related responses
         if (fuzzyMatch(lowerMessage, ['name', 'legal name', 'real name', 'full name', 'ganghoon'])) {
-            return "James goes by James Park professionally, but his legal name is Ganghoon Park. He uses 'James' as his preferred English name for easier pronunciation and professional networking. You can call him either James or Ganghoon!";
+            return "James goes by James Park professionally, but his legal name is Ganghoon Park. He uses 'James' as his preferred English name for easier pronunciation. You can call him either James or Ganghoon!";
         }
         
         // Language-related responses
         if (fuzzyMatch(lowerMessage, ['language', 'korean', 'english', 'french', 'speak', 'bilingual', 'multilingual'])) {
-            return "James is multilingual! He's fluent in both Korean and English, which helps him work with diverse international teams. He also knows a little bit of French, which he's been learning in his spare time. His language skills have been valuable in his international work experience and connecting with global clients.";
+            return "James is multilingual! He's fluent in both Korean and English. He also knows a little bit of French, which he's been learning in his spare time. His communication skills have been valuable in delivering success and building strong relationships with team members and clients.";
         }
         
         // Hobbies and interests responses
         if (fuzzyMatch(lowerMessage, ['hobby', 'hobbies', 'interest', 'fun', 'free time', 'tennis', 'soccer', 'hiking', 'running', 'dog', 'sport', 'exercise', 'fitness'])) {
-            return "James has an active lifestyle and enjoys various sports and outdoor activities! He loves playing tennis and soccer, which keep him competitive and fit. He's also passionate about hiking and exploring nature trails. One of his favorite activities is running with his dog - it's great exercise for both of them and a wonderful way to bond. These hobbies help him maintain work-life balance and stay energized for his demanding tech career.";
+            return "James has an active lifestyle and enjoys various sports and outdoor activities! He loves playing tennis and soccer, which keep him competitive and fit. He's also passionate about hiking and exploring nature trails. One of his favorite activities is running with his dog as it's a great exercise for both of them. He also enjoys playing the piano, clarinet, and saxophone. These hobbies help him maintain work-life balance and stay energized.";
         }
         
         // Experience-related responses
         if (fuzzyMatch(lowerMessage, ['experience', 'work', 'job', 'career', 'professional'])) {
-            return "James has 3+ years of professional experience! He's currently an AI Coding Expert & AI Trainer at Outlier, training Gen AI models across multiple programming languages. Previously, he worked as a Sales Engineer at SOTI Inc. for 2 years, where he led technical demos for 50+ enterprise customers and reduced deployment time by 200%. He also has experience as a Client Support Engineer at Andorix Inc. and has been creating technical content on YouTube since 2020.";
+            return "James has 3+ years of professional experience! He's currently an AI Coding Expert & AI Trainer at Outlier, training Gen AI models across multiple programming languages. Previously, he worked as a Sales Engineer at SOTI Inc. for 2 years, where he led technical demos and built software for 50+ enterprise customers, reducing deployment time by 200%. He also has experience as a Client Support Engineer at Andorix Inc. and has been creating technical content on YouTube since 2020.";
         }
         
         // Skills-related responses
         if (fuzzyMatch(lowerMessage, ['skill', 'programming', 'language', 'technology', 'tech', 'code', 'coding'])) {
-            return "James is proficient in multiple programming languages including Java, Python, JavaScript/TypeScript, C/C++, C#, SQL, and Go. He has expertise in frameworks like React, Node.js, Express, Spring Boot, and Angular. For databases, he works with MongoDB and PostgreSQL. He's also experienced with cloud platforms (Azure, AWS), DevOps tools (Docker, Git, CI/CD), and enterprise solutions like Salesforce and Jira.";
+            return "James is proficient in multiple programming languages including Java, Python, JavaScript/TypeScript, C/C++, C#, SQL, and Go. He has expertise in frameworks like React, Node.js, Express, Spring Boot, and Angular. For databases, he works with mySQL, MongoDB, and PostgreSQL. He's also experienced with cloud platforms (Azure, AWS), DevOps tools (Docker, Git, CI/CD), and enterprise solutions like Salesforce and Jira.";
         }
         
         // Projects-related responses
         if (fuzzyMatch(lowerMessage, ['project', 'portfolio', 'build', 'created', 'github', 'code'])) {
-            return "James has worked on several impressive projects! His notable ones include a Virtual Dragon Boat Coach using OpenCap and OpenSim APIs for biomechanical analysis, SecureChat - an encrypted communication app with KDC, a Random Flag Generator using Canvas API, an AI ChatBot with NLP capabilities, and comprehensive Interview Questions & Study Notes for technical preparation. Each project showcases different aspects of his technical expertise from AI/ML to security and web development.";
+            return "James has worked on several impressive projects! His notable ones include a Virtual Dragon Boat Coach using OpenCap and OpenSim APIs for biomechanical analysis, SecureChat, an encrypted communication app with KDC, a Random Flag Generator using Canvas API, an AI ChatBot with NLP capabilities, and comprehensive Interview Questions & Study Notes for technical preparation. Each project showcases different aspects of his technical expertise from AI/ML to security and web development.";
         }
         
         // Education-related responses
         if (fuzzyMatch(lowerMessage, ['education', 'degree', 'university', 'study', 'school', 'mcmaster', 'engineering'])) {
-            return "James holds a Bachelor of Engineering (B.Eng.) degree from McMaster University in Canada. He also has professional certifications including Microsoft Azure for Cloud Solutions, Google Analytics for Data Analysis, and Salesforce for CRM Solutions. His educational background combined with hands-on experience has given him a strong foundation in both theoretical concepts and practical applications.";
+            return "James holds a Bachelor of Software and Biomedical Engineering Co-op (B.Eng.) degree from McMaster University in Canada. He also has professional certifications including Microsoft Azure for Cloud Solutions, Google Analytics for Data Analysis, and Salesforce for CRM Solutions. His educational background combined with hands-on experience has given him a strong foundation in both theoretical concepts and practical applications.";
         }
         
         // Contact-related responses
@@ -347,7 +423,7 @@ function initializeChatbot() {
         
         // YouTube/Content creation responses
         if (fuzzyMatch(lowerMessage, ['youtube', 'content', 'tutorial', 'video', 'creator', 'channel'])) {
-            return "James is an active YouTube creator specializing in programming tutorials! His content has reached over 600,000+ views and he has built an audience of 10,000+ monthly users. He creates educational content about programming, software development, and technical topics. His expertise extends to video production using Adobe Premiere Pro, Photoshop, and DaVinci Resolve.";
+            return "James is an active YouTube creator specializing in programming tutorials! His content has reached over 600,000+ views and he has built an audience of 10,000+ monthly users. He creates educational content about programming, software development, and technical topics. His expertise extends to video production using Adobe Premiere Pro, Photoshop, CapCut, and DaVinci Resolve.";
         }
         
         // AI/Machine Learning responses
@@ -375,12 +451,17 @@ function initializeChatbot() {
             return "Hello! Great to meet you! I'm here to tell you all about James Park (Ganghoon Park) - his experience, skills, projects, hobbies, and background. What would you like to know about him?";
         }
         
+        // Thank you responses
+        if (fuzzyMatch(lowerMessage, ['thank you', 'thanks', 'appreciate', 'helpful', 'great', 'awesome', 'perfect'])) {
+            return "You're very welcome! I'm glad I could help you learn more about James. Feel free to ask any other questions about his experience, skills, projects, or personal interests. If you'd like to get in touch with him directly, you can reach him at jamesparkgh@gmail.com!";
+        }
+        
         // Achievements/accomplishments
         if (fuzzyMatch(lowerMessage, ['achievement', 'accomplishment', 'success', 'impressive', 'proud'])) {
             return "James has achieved quite a lot! He's served 50+ enterprise clients, reached 600K+ YouTube views, reduced deployment time by 200% at SOTI Inc., and has 3+ years of professional experience. He's currently training cutting-edge AI models at Outlier and has built a strong portfolio of technical projects. He's also maintained an active lifestyle with multiple sports and speaks three languages!";
         }
         
-        // Default response with improved suggestions
-        return "That's a great question! James (Ganghoon Park) is a versatile Software Engineer and AI Coding Expert with experience in full-stack development, AI/ML, and enterprise solutions. He's also multilingual and very athletic! Could you be more specific about what you'd like to know? You can ask about his:\n\n• Professional experience and skills\n• Projects and technical work\n• Education and certifications\n• Languages (Korean, English, French)\n• Hobbies (tennis, soccer, hiking, running)\n• Contact information\n• Personal background";
+        // Default response with improved suggestions (for James-related questions that don't match specific categories)
+        return "That's a great question about James! I'd love to help, but I might need a bit more context to give you the best answer. James (Ganghoon Park) is a versatile Software Engineer and AI Coding Expert with experience in full-stack development, AI/ML, and enterprise solutions. He's also multilingual and very athletic!\n\nHere are some specific topics I can help with:\n\n• Professional experience and career journey\n• Technical skills and programming languages\n• Projects and GitHub repositories\n• Education and certifications\n• Languages he speaks (Korean, English, French)\n• Hobbies and sports (tennis, soccer, hiking, running)\n• Contact information and social media\n• Personal background and achievements\n\nIf your question is about something else entirely, feel free to contact James directly at jamesparkgh@gmail.com!";
     }
 }
