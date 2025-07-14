@@ -212,7 +212,6 @@ a:hover {
   background-color: var(--background);
   box-shadow: var(--shadow-lg);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--border-color);
   width: 200px;
   max-height: 0;
   overflow: hidden;
