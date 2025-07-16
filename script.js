@@ -296,7 +296,8 @@ function initializeChatbot() {
             'technology': ['tech', 'technologies', 'technical'],
             'framework': ['frameworks', 'library', 'libraries'],
             'database': ['databases', 'db', 'data'],
-            'tools': ['tool', 'software tools', 'dev tools']
+            'tools': ['tool', 'software tools', 'dev tools'],
+            'development': ['dev', 'developer', 'developing']
         };
 
         if (misspellings[word]) {
@@ -392,7 +393,7 @@ function initializeChatbot() {
         
         // Skills-related responses (check this first before language to catch programming questions)
         if (fuzzyMatch(lowerMessage, ['skill', 'programming', 'technology', 'tech', 'code', 'coding', 'programming language', 'programming languages', 'technical skill', 'technical skills', 'framework', 'frameworks', 'database', 'databases', 'tools', 'software', 'development'])) {
-            return "James is proficient in multiple programming languages including Java, Python, JavaScript/TypeScript, C/C++, C#, SQL, and Go. He has expertise in frameworks like React, Node.js, Express, Spring Boot, and Angular. For databases, he works with mySQL, MongoDB, and PostgreSQL. He's also experienced with cloud platforms (Azure, AWS), DevOps tools (Docker, Git, CI/CD), and enterprise solutions like Salesforce and Jira.";
+            return "James is proficient in multiple programming languages including Java, Python, JavaScript/TypeScript, C/C++, C#, SQL, and Go. He has expertise in frameworks like React, Node.js, Express, Spring Boot, and Angular. For databases, he works with mySQL, MongoDB, and PostgreSQL. He's also experienced with cloud platforms (Azure, AWS), DevOps tools (Git, Docker, CI/CD), and enterprise solutions like Salesforce and Jira.";
         }
         
         // Spoken Language-related responses (more specific keywords to avoid confusion with programming languages)
