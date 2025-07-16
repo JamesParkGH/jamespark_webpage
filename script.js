@@ -277,11 +277,11 @@ function initializeChatbot() {
         // Common misspellings and variations
         const misspellings = {
             'experience': ['experiance', 'experence', 'expirience', 'exp', 'work', 'job'],
-            'programming': ['programing', 'coding', 'code', 'prog', 'software'],
+            'programming': ['programing', 'coding', 'code', 'prog', 'software', 'programming language', 'programming languages'],
             'language': ['langugage', 'lang', 'langs', 'languages'],
             'project': ['projet', 'projects', 'proj'],
             'education': ['educaton', 'school', 'university', 'degree', 'study'],
-            'skill': ['skil', 'skills', 'talent', 'ability'],
+            'skill': ['skil', 'skills', 'talent', 'ability', 'technical skill', 'technical skills'],
             'hobby': ['hobbies', 'hobbie', 'interest', 'interests', 'free time', 'fun'],
             'korean': ['korea', 'korean language', 'hangul'],
             'english': ['enlgish', 'english language'],
@@ -292,7 +292,11 @@ function initializeChatbot() {
             'running': ['run', 'jog', 'jogging'],
             'contact': ['reach', 'email', 'linkedin', 'connect'],
             'name': ['legal name', 'real name', 'full name', 'ganghoon'],
-            'dog': ['pet', 'puppy', 'dogs']
+            'dog': ['pet', 'puppy', 'dogs'],
+            'technology': ['tech', 'technologies', 'technical'],
+            'framework': ['frameworks', 'library', 'libraries'],
+            'database': ['databases', 'db', 'data'],
+            'tools': ['tool', 'software tools', 'dev tools']
         };
 
         if (misspellings[word]) {
@@ -386,8 +390,13 @@ function initializeChatbot() {
             return "James goes by James Park professionally, but his legal name is Ganghoon Park. He uses 'James' as his preferred English name for easier pronunciation. You can call him either James or Ganghoon!";
         }
         
-        // Language-related responses
-        if (fuzzyMatch(lowerMessage, ['language', 'korean', 'english', 'french', 'speak', 'bilingual', 'multilingual'])) {
+        // Skills-related responses (check this first before language to catch programming questions)
+        if (fuzzyMatch(lowerMessage, ['skill', 'programming', 'technology', 'tech', 'code', 'coding', 'programming language', 'programming languages', 'technical skill', 'technical skills', 'framework', 'frameworks', 'database', 'databases', 'tools', 'software', 'development'])) {
+            return "James is proficient in multiple programming languages including Java, Python, JavaScript/TypeScript, C/C++, C#, SQL, and Go. He has expertise in frameworks like React, Node.js, Express, Spring Boot, and Angular. For databases, he works with mySQL, MongoDB, and PostgreSQL. He's also experienced with cloud platforms (Azure, AWS), DevOps tools (Docker, Git, CI/CD), and enterprise solutions like Salesforce and Jira.";
+        }
+        
+        // Spoken Language-related responses (more specific keywords to avoid confusion with programming languages)
+        if (fuzzyMatch(lowerMessage, ['spoken language', 'spoken languages', 'speak', 'bilingual', 'multilingual', 'korean', 'english', 'french']) && !lowerMessage.includes('programming')) {
             return "James is multilingual! He's fluent in both Korean and English. He also knows a little bit of French, which he's been learning in his spare time. His communication skills have been valuable in delivering success and building strong relationships with team members and clients.";
         }
         
@@ -399,11 +408,6 @@ function initializeChatbot() {
         // Experience-related responses
         if (fuzzyMatch(lowerMessage, ['experience', 'work', 'job', 'career', 'professional'])) {
             return "James has 3+ years of professional experience! He's currently an AI Coding Expert & AI Trainer at Outlier, training Gen AI models across multiple programming languages. Previously, he worked as a Sales Engineer at SOTI Inc. for 2 years, where he led technical demos and built software for 50+ enterprise customers, reducing deployment time by 200%. He also has experience as a Client Support Engineer at Andorix Inc. and has been creating technical content on YouTube since 2020.";
-        }
-        
-        // Skills-related responses
-        if (fuzzyMatch(lowerMessage, ['skill', 'programming', 'language', 'technology', 'tech', 'code', 'coding'])) {
-            return "James is proficient in multiple programming languages including Java, Python, JavaScript/TypeScript, C/C++, C#, SQL, and Go. He has expertise in frameworks like React, Node.js, Express, Spring Boot, and Angular. For databases, he works with mySQL, MongoDB, and PostgreSQL. He's also experienced with cloud platforms (Azure, AWS), DevOps tools (Docker, Git, CI/CD), and enterprise solutions like Salesforce and Jira.";
         }
         
         // Projects-related responses
